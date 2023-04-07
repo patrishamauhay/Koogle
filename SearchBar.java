@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class SearchBar extends JFrame implements ActionListener {
 
@@ -43,7 +44,7 @@ public class SearchBar extends JFrame implements ActionListener {
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 5, 5);
 
-     // Create clear button
+        // Create clear button
         JButton clearButton = new JButton("Clear");
         clearButton.addActionListener(new ActionListener() {
             @Override
@@ -64,7 +65,7 @@ public class SearchBar extends JFrame implements ActionListener {
         c.anchor = GridBagConstraints.CENTER;
         panel.add(searchButton, c);
 
-        
+
         // Add Koogle label to panel
         c.gridx = 0;
         c.gridy = 0;
@@ -121,57 +122,53 @@ public class SearchBar extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-   public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == searchButton) {
-            String searchQuery = searchField.getText();
-            String searchPath = pathField.getText();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Get the search terms and search space entered by the user
+        String searchTermsString = searchField.getText();
+        String searchSpace = pathField.getText();
 
-            // Gets list of files in directory
-           ArrayList<File> fileList = SearchFiles.getFilesInSearchSpace(searchPath);
+        // Split the search terms into an array using commas as the delimiter
+        String[] searchTerms = searchTermsString.split(",");
 
-           // Stores count of matches for each file
-            Map<File, Integer> matchCounts = new HashMap<>();
+        // Get the list of files in the search space
+        List<File> fileList = SearchFiles.getFilesInSearchSpace(searchSpace);
 
-            // Loops through files in file list
-            for (File f : fileList) {
-            	
-            	// Reads contents of file
-                String fileContents = MyFileReader.readFile(f.getAbsolutePath());
-                
-                int matchCount = 0;
-                
-                // Splits search query into individual search terms
-                // Loops through each term
-                for (String searchTerm : searchQuery.split(",")) {
-                	
-                    if (fileContents.contains(searchTerm.trim())) {
-                        matchCount++;
-                    }
-                }
-                // If there is a match count, it stores file and match count
-                if (matchCount > 0) {
-                    matchCounts.put(f, matchCount);
-                }
+        Map<File, Integer> matchCounts = new HashMap<>();
+
+        // Loop through each file in the list of files
+        for (File f : fileList) {
+            // Read the contents of the current file
+            List<String> fileContents = MyFileReader.readFile(f.getAbsolutePath());
+            int matchCount = 0;
+            // Loop through each search term
+            for (String searchTerm : searchTerms) {
+                // Count the number of times the current search term appears in the file
+                matchCount += Collections.frequency(fileContents, searchTerm.trim());
             }
-            
-            // If there are matches, display results in output area 
-            if (!matchCounts.isEmpty()) {
-            	
-                StringBuilder resultBuilder = new StringBuilder();
-                
-                // Sorts map entries by match count in descending order
-                matchCounts.entrySet().stream().sorted(Map.Entry.<File, Integer>comparingByValue().reversed())
-                        .forEach(entry -> {
-                        	
-                            resultBuilder.append("Found " + entry.getValue() + " times in file: " + entry.getKey().getAbsolutePath() + "\n");
-                        });
-                
-                // Shows results
-                output.setText(resultBuilder.toString());
-            } else {
-                output.setText("No txt files found containing the search terms.");
+            // If any matches were found, add the file to the map with its match count
+            if (matchCount > 0) {
+                matchCounts.put(f, matchCount);
             }
         }
-    }
 
+        // If any matches were found, sort the map entries by match count and print them out
+        if (!matchCounts.isEmpty()) {
+            List<Map.Entry<File, Integer>> sortedEntries = new ArrayList<>(matchCounts.entrySet());
+            Collections.sort(sortedEntries, new Comparator<Map.Entry<File, Integer>>() {
+                @Override
+                public int compare(Map.Entry<File, Integer> e1, Map.Entry<File, Integer> e2) {
+                    return e2.getValue().compareTo(e1.getValue());
+                }
+            });
+            // Loop through the sorted list of Map.Entry<File, Integer> elements
+            // and assign each element to the "entry" variable
+            for (Map.Entry<File, Integer> entry : sortedEntries) {
+                output.append("Found " + entry.getValue() + " times in file: " + entry.getKey().getAbsolutePath() + "\n");
+            }
+        } else {
+            // If no matches were found, print a message to the user
+            output.append("No txt files found containing the search terms.\n");
+        }
+    }
 }
