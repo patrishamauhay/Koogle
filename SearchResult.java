@@ -14,7 +14,15 @@ public class SearchResult {
         this.filePath = filePath;
         this.count = count;
     }
-    
+	
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public int getScore() {
+        return count;
+    }
+	
     // Returns results
     public String toString() {
         return "File: " + filePath + ", Score: " + count;
