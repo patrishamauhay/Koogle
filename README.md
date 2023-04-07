@@ -39,6 +39,7 @@ SearchFiles.java
   - The user is able to search for multiple words (separated by commas)
   - The user is able to pick the search space eg directory, file etc.
   - There is a ranking mechanism, the strongest match is returned first.
+  - Spelling correction where it can correct wrong spelling of search terms
   - There is a "Clear" button that clears the output when clicked.
 
 
