@@ -23,11 +23,13 @@ public class SearchFiles {
             // Loop through all the files in the directory and its sub directories
             File[] files = file.listFiles();
             
+            // Searches through directories
             for (File f : files) {
                 if (f.isDirectory()) {
                 	
                     fileList.addAll(getFilesInSearchSpace(f.getAbsolutePath()));
                     
+                    // Adds .txt files to list
                 } else if (f.isFile() && f.getName().endsWith(".txt")) {
                 	
                     fileList.add(f);
@@ -44,3 +46,4 @@ public class SearchFiles {
     }
 
 }
+
