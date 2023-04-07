@@ -121,34 +121,52 @@ public class SearchBar extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent e) {
+   public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
             String searchQuery = searchField.getText();
             String searchPath = pathField.getText();
 
+            // Gets list of files in directory
            ArrayList<File> fileList = SearchFiles.getFilesInSearchSpace(searchPath);
 
+           // Stores count of matches for each file
             Map<File, Integer> matchCounts = new HashMap<>();
 
+            // Loops through files in file list
             for (File f : fileList) {
+            	
+            	// Reads contents of file
                 String fileContents = MyFileReader.readFile(f.getAbsolutePath());
+                
                 int matchCount = 0;
+                
+                // Splits search query into individual search terms
+                // Loops through each term
                 for (String searchTerm : searchQuery.split(",")) {
+                	
                     if (fileContents.contains(searchTerm.trim())) {
                         matchCount++;
                     }
                 }
+                // If there is a match count, it stores file and match count
                 if (matchCount > 0) {
                     matchCounts.put(f, matchCount);
                 }
             }
-
+            
+            // If there are matches, display results in output area 
             if (!matchCounts.isEmpty()) {
+            	
                 StringBuilder resultBuilder = new StringBuilder();
+                
+                // Sorts map entries by match count in descending order
                 matchCounts.entrySet().stream().sorted(Map.Entry.<File, Integer>comparingByValue().reversed())
                         .forEach(entry -> {
+                        	
                             resultBuilder.append("Found " + entry.getValue() + " times in file: " + entry.getKey().getAbsolutePath() + "\n");
                         });
+                
+                // Shows results
                 output.setText(resultBuilder.toString());
             } else {
                 output.setText("No txt files found containing the search terms.");
