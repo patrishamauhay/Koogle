@@ -1,4 +1,9 @@
-
+/*
+ * This class takes the file path as an input,
+ * and reads the contents of the file
+ * and then returns the contents.
+ */
+ 
 import java.io.*;
 import java.util.*;
 
