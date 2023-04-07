@@ -1,3 +1,8 @@
+/*
+ * This class calculates the amount of 
+ * times the searched term appears
+ */
+
 import java.util.*;
 import java.util.regex.*;
 
