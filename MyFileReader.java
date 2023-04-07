@@ -3,6 +3,8 @@
  * and reads the contents of the file
  * and then returns the contents.
  */
+
+package searchengine;
  
 import java.io.*;
 import java.util.*;
