@@ -13,6 +13,7 @@ This repository contains:
 
 
 *List of classes
+
 Control
   - Object from the class SearchBar is created to initialise the program.
 
