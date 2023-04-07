@@ -3,6 +3,8 @@
  * times the searched term appears
  */
 
+package searchengine;
+
 import java.util.*;
 
 public class Searcher {
