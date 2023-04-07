@@ -11,7 +11,6 @@ This repository contains:
 - textfile folder (includes unique data to search for a term)
 
 
-
 *List of classes
 
 Control
@@ -24,9 +23,6 @@ SearchBar.java
 MyFileReader.java
   - This class takes the file path as an input, reads the contents of the file and then returns the contents.
 
-SearchResult.java
-  - This class shows the search result, this includes a toString method.
-
 SearchFiles.java
   - A class for searching all files with .txt extension in the given directory and its sub-directories.
 
@@ -37,7 +33,6 @@ SearchFiles.java
   - The user is able to search for multiple words (separated by commas)
   - The user is able to pick the search space eg directory, file etc.
   - There is a ranking mechanism, the strongest match is returned first.
-  - Spelling correction where it can correct wrong spelling of search terms
   - There is a "Clear" button that clears the output when clicked.
 
 
