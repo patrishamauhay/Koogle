@@ -11,7 +11,7 @@ import java.util.*;
 
 public class MyFileReader {
 
-    public static String readFile(String filePath) {
+    public static List<String> readFile(String filePath) {
     	
     	// Creates object from the file path
         File file = new File(filePath);
@@ -19,18 +19,18 @@ public class MyFileReader {
         // Object to read file
         Scanner reader;
         
-        // String for file contents
-        String fileContents = "";
+        // List to store file contents
+	List<String> fileContents = new ArrayList<>();
         
-		try {
-			reader = new Scanner(file);
+	try {
+		reader = new Scanner(file);
 			
-			// Loops through each line of file
-			while (reader.hasNextLine()) {
-	            fileContents += reader.nextLine() + "\n";
-	        }
+		// Loops through each line of file
+		while (reader.hasNextLine()) {
+			fileContents.addAll(Arrays.asList(reader.nextLine().split("\\W+")));
+		}	
 
-			// Close scanner object
+		// Close scanner object
 	        reader.close();
 			
 	    // If file is not found, shows error message
