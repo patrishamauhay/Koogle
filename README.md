@@ -19,12 +19,10 @@ Control
 
 SearchBar.java
   - This contains the code for the GUI. Which allows the user to input the Search Query and the Search Path, it includes a button to Search and when clicked the output is shown in the text field below. There is also a "Clear" button that clears the ouput when pressed.
+  - This class reads through the contents of a file and calculates the number of appeared search queries.
 
 MyFileReader.java
   - This class takes the file path as an input, reads the contents of the file and then returns the contents.
-
-Searcher.java
-  - This class contains two methods: "ArrayList" which reads the contents of the file, adds the SearchResult object to the list if the search query appears and it stores the results in decreasing order by the score of each result. And "calculate" which calculates the amount of times the searched query appears.
 
 SearchResult.java
   - This class shows the search result, this includes a toString method.
