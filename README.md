@@ -1,4 +1,5 @@
-# Assignment - OOP
+# Koogle - Search Engine tool
+Assignment - OOP
 Patrisha Mauhay - C21339643
 TU857-2
 
